@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     FILE* f2 = fopen("user.txt", "a");
     int ff2 = fileno(f2);
     
-    char *p1[] = {"grep", "sshd", NULL};
-    char *p2[] = {"$(whoami)", NULL};
+    char *p1[] = {"grep", "", NULL};
+    char *p2[] = {"whoami", NULL};
 
     if (pipe(fd)<0){
         perror("Error de creació del pipe fd[]");
@@ -40,10 +40,20 @@ int main(int argc, char *argv[])
            // close(fd[0]);
 
             // llegir de la pipe, malloc y etc
-            char * filtro;
-            size_t *p1 = malloc(3*sizeof(int));
-            read(fd[0], filtro, p1);
-            strcpy(p1[1],filtro);
+            char * filtro1 = malloc(8*sizeof(char));
+            ssize_t nb1 = read(fd[0], filtro1, sizeof(filtro1));
+            if ( nb1 < 0) {
+                perror("read fd[0]");
+                exit(-1);
+            } else{
+                printf("Procés fill %d -> ha rebut una cadena a read(fd[0],%s,%ld)\n", getpid(),filtro1,sizeof(filtro1));
+                strcpy(p1[1],filtro1);
+                free(filtro1);
+                close(fd[0]);
+                execvp(p1[0], p1);
+                exit(0);
+            }
+            //strcpy(p1[1],filtro1);
             close(fd[0]);
             execvp(p1[0], p1);
             return EXIT_FAILURE;
@@ -59,10 +69,20 @@ int main(int argc, char *argv[])
             //dup2(fd[1],STDOUT_FILENO);
             dup2(ff2, 1);
             close(fd[0]);
-            char * filtro2;
-            size_t *p2 = malloc(3*sizeof(int));
-            write(fd[1], filtro2, p2);
-            strcpy(p2[0],filtro2);
+            char * filtro2 = malloc(8*sizeof(char));
+            ssize_t nb2 = write(fd[1], filtro2, sizeof(filtro2));
+            if ( nb2 < 0) {
+                perror("write fd[1]");
+                exit(-1);
+            } else{
+                //strcpy(p2[0],filtro2);
+                close(fd[1]);
+                execvp(p2[1], p2);
+                free(filtro2);
+                exit(0);
+            }
+
+            //strcpy(p2[0],filtro2);
             close(fd[1]);
             execvp(p2[1], p2);
             return EXIT_FAILURE;
