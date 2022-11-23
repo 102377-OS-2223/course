@@ -19,9 +19,28 @@ void show_pokemon(int position){
 void init_pokedex(void){
 
   FILE* f = fopen("./pokedex.csv", "r");
+  char * buffer = malloc(151);
+  char * info;
   if(!f) {
     perror("fopen");
     exit(1);
   }
   //@TODO
+  while(fgets(buffer, POKEMONS, f) != NULL){
+
+    struct pokemon p;
+
+    info = strtok(buffer, ",");
+    int id = atoi(info);
+    p.id = id;
+
+    info = strtok(NULL, ",");
+    strcpy(p.name, info);
+
+    info = strtok(NULL, ",");
+    strcpy(p.type[0], info);
+
+    
+
+  }
 }
