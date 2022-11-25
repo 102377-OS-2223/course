@@ -35,14 +35,15 @@ int main(int argc, char *argv[])
             // Fill -> ls -> imprimeix a stdout
             // Tanquem stdout i redireccionem stdout a l'escriptura fd[1] de la pipe
             ////dup2(fd[0],STDIN_FILENO);
+            
             dup2(ff1, 0);
             close(fd[1]);
            // close(fd[0]);
 
             // llegir de la pipe, malloc y etc
-            char * filtro1 = malloc(8*sizeof(char));
-            ssize_t nb1 = read(fd[0], filtro1, sizeof(filtro1));
-            if ( nb1 < 0) {
+            char * user = malloc(8*sizeof(char));
+            read(fd[0], user, sizeof(user));
+            /*if ( nb1 < 0) {
                 perror("read fd[0]");
                 exit(-1);
             } else{
@@ -52,8 +53,8 @@ int main(int argc, char *argv[])
                 close(fd[0]);
                 execvp(p1[0], p1);
                 exit(0);
-            }
-            //strcpy(p1[1],filtro1);
+            }*/
+            strcpy(p1[1],user);
             close(fd[0]);
             execvp(p1[0], p1);
             return EXIT_FAILURE;
@@ -69,9 +70,9 @@ int main(int argc, char *argv[])
             //dup2(fd[1],STDOUT_FILENO);
             dup2(ff2, 1);
             close(fd[0]);
-            char * filtro2 = malloc(8*sizeof(char));
-            ssize_t nb2 = write(fd[1], filtro2, sizeof(filtro2));
-            if ( nb2 < 0) {
+            //char * filtro2 = malloc(8*sizeof(char));
+            //ssize_t nb2 = write(fd[1], filtro2, sizeof(filtro2));
+            /*if ( nb2 < 0) {
                 perror("write fd[1]");
                 exit(-1);
             } else{
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
                 execvp(p2[1], p2);
                 free(filtro2);
                 exit(0);
-            }
+            }*/
 
             //strcpy(p2[0],filtro2);
             close(fd[1]);
