@@ -62,6 +62,7 @@ A un printk() li has de passar un missatge entre cometes i una al·lusió del ar
 El printk() está basat en el mateix printf(), però difereix en dues parts:
 
 1 - printk() pot manar missatges del nivell log
+
 2 - Té altres limitacions i extensions.
 
 https://stackoverflow.com/questions/17751216/writing-a-new-system-call
@@ -80,10 +81,15 @@ Hackegeu el vostre kernel de manera que imprimeixi la cadena ("chmod is drunk!!!
 
 ### Resposta
 1 - Primer hem de dirigir-nos a la carpeta de linux.
+
 2 - Després trobar la carpeta que n'hi és la carpeta fs i invocar la comanda 'vi fs/open.c strace chmod'.
+
 3 - A l'editor vim busquem la paraula chmod prenent la tecla '/'. Imatge "Chmod".
+
 4 - Escribim 'write("chmod is drunk!!!");' per a que escribeixi aquesta frase cada cop que s'invoqui el chmod. Imatge "Chmod2".
+
 5 - Sortim amb ':wq!' per a guardar i sortir sense que ens digui res.
+
 6 - Al terminal només queda ja comprobar amb un arxiu si hem "hackejat" el chmod. Imatge "Chmod3".
 
 Per a entendre per a que serveix strace:
