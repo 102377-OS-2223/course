@@ -93,12 +93,16 @@ Hackegeu el vostre kernel de manera que imprimeixi la cadena ("chmod is drunk!!!
 6 - Al terminal només queda ja comprobar amb un arxiu si hem "hackejat" el chmod. Imatge "Chmod3".
 
 Per a entendre per a que serveix strace:
+
 https://www.solvetic.com/tutoriales/article/4414-comandos-strace-para-solucionar-problemas-procesos-linux/
 
 Per a entendre per a que serveix chmod i com invocar-lo:
+
 https://www.ionos.es/digitalguide/servidores/know-how/asignacion-de-permisos-de-acceso-con-chmod/
+
 https://www.howtogeek.com/437958/how-to-use-the-chmod-command-on-linux/
 
 Open.c versió web:
+
 https://elixir.bootlin.com/linux/latest/source/fs/open.c
 
