@@ -55,7 +55,14 @@ afirmatiu indica quin. En cas negatiu, justifica la resposta.
 ### Resposta
 a) A la funció SYSCALL_DEFINE1 se li pasen els paràmetres my_syscall, un punter (char *) i un String (msg). En la següent comanda, imprimeix el que n'hi hagi  a la funció KERN_INFO, més un text que possi my_syscall : msg (osigui, el valor de msg) i un salt de línia. Després simplement retorna un 0 finalitzant el programa.
 
-b) El métode SYSCALL_DEFINEn (on n és un numero) és una crida al sistema, on el primer paràmetre que s'el passa és el nom del system call, el segon és el pid_t i el tercer és el pid. A més SYSCALL_DEFINEn té l'n que representa el numero d'arguments que tindrà el sistema. El que ens farà el printk() és manar un missatge del sistema a la terminal. KERN_INFO el que fa és dir que el missatge serà de tipus informatiu. A un printk() li has de passar un missatge entre cometes i una al·lusió del argument que has de passar-ne, més despres l'argument a passar-ne. Cal dir, que aquesta és la manera més comú de fer-ho, 'printk(KERN_INFO "Message: %s\n", arg);'. El printk() está basat en el mateix printf(), però difereix en dues parts: 1 - printk() pot manar missatges del nivell log 2 - Té altres limitacions i extensions.
+b) El métode SYSCALL_DEFINEn (on n és un numero) és una crida al sistema, on el primer paràmetre que s'el passa és el nom del system call, el segon és el pid_t i el tercer és el pid. A més SYSCALL_DEFINEn té l'n que representa el numero d'arguments que tindrà el sistema. El que ens farà el printk() és manar un missatge del sistema a la terminal. KERN_INFO el que fa és dir que el missatge serà de tipus informatiu.
+
+A un printk() li has de passar un missatge entre cometes i una al·lusió del argument que has de passar-ne, més despres l'argument a passar-ne. Cal dir, que aquesta és la manera més comú de fer-ho, 'printk(KERN_INFO "Message: %s\n", arg);'.
+
+El printk() está basat en el mateix printf(), però difereix en dues parts:
+
+1 - printk() pot manar missatges del nivell log
+2 - Té altres limitacions i extensions.
 
 https://stackoverflow.com/questions/17751216/writing-a-new-system-call
 https://www.kernel.org/doc/html/latest/core-api/printk-basics.html
@@ -72,12 +79,12 @@ https://lwn.net/Articles/604287/
 Hackegeu el vostre kernel de manera que imprimeixi la cadena ("chmod is drunk!!!") cada vegada que es fa una crida a chmod. Explicar els passos realitzats i adjunteu captures de pantalla per veure el hack.
 
 ### Resposta
-Primer hem de dirigir-nos a la carpeta de linux.
-Després trobar la carpeta que n'hi és la carpeta fs i invocar la comanda 'vi fs/open.c strace chmod'.
-A l'editor vim busquem la paraula chmod prenent la tecla '/'. Imatge "Chmod".
-Escribim 'write("chmod is drunk!!!");' per a que escribeixi aquesta frase cada cop que s'invoqui el chmod. Imatge "Chmod2".
-Sortim amb ':wq!' per a guardar i sortir sense que ens digui res.
-Al terminal només queda ja comprobar amb un arxiu si hem "hackejat" el chmod. Imatge "Chmod3".
+1 - Primer hem de dirigir-nos a la carpeta de linux.
+2 - Després trobar la carpeta que n'hi és la carpeta fs i invocar la comanda 'vi fs/open.c strace chmod'.
+3 - A l'editor vim busquem la paraula chmod prenent la tecla '/'. Imatge "Chmod".
+4 - Escribim 'write("chmod is drunk!!!");' per a que escribeixi aquesta frase cada cop que s'invoqui el chmod. Imatge "Chmod2".
+5 - Sortim amb ':wq!' per a guardar i sortir sense que ens digui res.
+6 - Al terminal només queda ja comprobar amb un arxiu si hem "hackejat" el chmod. Imatge "Chmod3".
 
 Per a entendre per a que serveix strace:
 https://www.solvetic.com/tutoriales/article/4414-comandos-strace-para-solucionar-problemas-procesos-linux/
