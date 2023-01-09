@@ -2,6 +2,20 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+#include "helpers.h" //errors; enters; compareCommands
+#include <stdlib.h>
+#include <sys/types.h>
+#include <stdbool.h>
+#include "log.h" //log_debug()
+
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
 
 void launchcmd(char** args);
 
@@ -10,21 +24,33 @@ int main(int argc, char *argv[]){
         // readline
         // parseline
         // launch comand
-
-    int acabado = 0;
     char *buffer;
-    size_t buffersize = 0;
+    //int acabado = 0;
+    size_t buffersize;
+    bool exit = false;
     
-    do{
+    while (!exit){
+        printf(BLU "ossh> " RESET);
         getline(&buffer, &buffersize, stdin);
+        //read_line(&buffer);
         //parseline();
+        buffer[strcspn(buffer, "\n")] = '\0';
         launchcmd(&buffer);
-        if (strcmp(buffer, "exit")){
-            acabado = 1;
-        } 
 
+        if (strncmp(buffer, "exit", buffersize) == 0){
+            exit = true; 
+        }
 
-    } while(acabado == 0);
+        compareCommands(buffer);
+        errors(buffer);
+        enters(buffer);
+
+        if (strncmp(buffer, "help", buffersize) == 0){
+            ayuda();
+        }
+    }
+    log_debug(MAG "Stopping the ossh shell... :(" RESET);
+	return EXIT_SUCCESS;
 }
 
 void launchcmd(char** args){

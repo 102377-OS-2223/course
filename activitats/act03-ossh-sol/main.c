@@ -112,7 +112,7 @@ int launch(char *cmd)
   if (n_pipes > 0){
     pipes = malloc( (size_t) n_pipes * sizeof(int *));
     for(int p=0; p<n_pipes; p++){
-      pipes[p]=malloc(2);
+      pipes[p]=malloc(8);
       pipe(pipes[p]);
     }
   }
