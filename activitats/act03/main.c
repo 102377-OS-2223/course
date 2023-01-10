@@ -43,11 +43,11 @@ int main(int argc, char *argv[]){
 
         compareCommands(buffer);
         errors(buffer);
-        enters(buffer);
 
         if (strncmp(buffer, "help", buffersize) == 0){
             ayuda();
         }
+        enters(buffer);
     }
     log_debug(MAG "Stopping the ossh shell... :(" RESET);
 	return EXIT_SUCCESS;

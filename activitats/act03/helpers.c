@@ -43,7 +43,7 @@ int read_line(char** line){
 int errors(char *c){
     for (int i = 0; i < strlen(c); i++){
         if (c[i] == '[' || c[i] == '|' || c[i] == '>' || c[i] == '<' || c[i] == '&' || c[i] == ']'){
-            log_error(RED "Not allowed operators" MAG "[|><&]" RESET);
+            log_error(RED "Not allowed operators: " MAG "[|><&]\n" RESET);
             return 1;
         }
     }
